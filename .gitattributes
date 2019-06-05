@@ -1,5 +1,6 @@
 import requests
 import json
+
 user_counter = 0
 
 info = dict()
@@ -42,6 +43,8 @@ while user_counter <=1:
                     response = requests.get(sub_url)
                     html = json.loads(response.text)
                     page_counter += 1
+
+                    #if f in html:
                     if "next" in html :
                         #print(html["data"])
                         appenddata(html["data"])
@@ -49,12 +52,16 @@ while user_counter <=1:
                     else:
                         break
 
+                    #else:
+                        #appenddata("None")
+
                 elif page_counter >= 1:
                     sub_url = html["paging"]["next"]
                     response = requests.get(sub_url)
                     html = json.loads(response.text)
                     page_counter += 1
 
+                    #if f in html:
                     if "next" in html:
                         #print(html["data"])
                         appenddata(html["data"])
@@ -62,14 +69,41 @@ while user_counter <=1:
                     else:
                         break
 
+                    #else:
+                        #appenddata("None")
+
     user_counter += 1
 print("____________________________________________________________________________________________________________")
-for i in info["A"]:
-    print(i)
+for i in range(4):
+    if i == 3:
+        for t in range(len(info["A"][3])) :
+            print(info["A"][3][t]["name"], info["B"][3][t]["created_time"])
 
+    elif i == 2:
+        for t in range(len(info["A"][2])):
+            if "message" in info["A"][2][t]:
+                print(info["A"][2][t]["message"], info["B"][2][t]["created_time"])
+
+    else:
+        print(info["A"][i])
 
 
 print("____________________________________________________________________________________________________________")
 
-for i in info["B"]:
-    print(i)
+for i in range(4):
+    if i == 3:
+        for t in range(len(info["B"][3])):
+            print(info["B"][3][t]["name"], info["B"][3][t]["created_time"])
+
+    elif i == 2:
+        for t in range(len(info["B"][2])):
+            if "message" in info["B"][2][t]:
+                print(info["B"][2][t]["message"], info["B"][2][t]["created_time"])
+
+
+    else:
+        print(info["B"][i])
+
+print("______________________________________________________________________________________________________________")
+
+print(info)
