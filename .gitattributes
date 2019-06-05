@@ -1,3 +1,30 @@
+import tkinter as tk
+
+class MyGUI():
+    window = tk.Tk()
+    window.title('使用說明')
+    
+    frame1 = tk.Frame(window) 
+    frame1.grid(row=0, column=0, sticky='w') 
+    tk.Label(frame1, text = '1.上https://developers.facebook.com/docs/graph-api?locale=zh_TW 註冊,並登入自己的fb').pack(side='left')
+    
+    
+    
+    frame2 = tk.Frame(window)
+    frame2.grid(row=1, column=0, sticky='w')
+    tk.Label(frame2, text = '2.取得權杖後打勾以下項目: user_hometown, user_posts, user_likes').pack(side='left')
+    
+    
+    
+    frame3 = tk.Frame(window)
+    frame3.grid(row=2, column=0, sticky='nw')
+    tk.Label(frame3, text = '3.先輸入第一個人的id和access token,再輸入第二個人的 id和access token(by api網站登入的2個人的資料)').pack(side='left')
+    
+    
+    window.mainloop()
+
+MyGUI()
+
 import requests
 import json
 
