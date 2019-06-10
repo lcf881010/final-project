@@ -1,86 +1,86 @@
 import tkinter as tk
 
 class Begin(tk.Frame):
-	def __init__(self):
-		tk.Frame.__init__(self)
-		self.grid()
-		self.create_widgets()
-		
-	def create_widgets(self):
-		self.lb1 = tk.Label(self, height=1, width=40, text='GUY1')
-		self.lb2 = tk.Label(self, height=1, width=40, text='name1:')
-		self.lb3 = tk.Label(self, height=1, width=40, text='token1:')
-		self.lb4 = tk.Label(self, height=1, width=40, text='GUY2')
-		self.lb5 = tk.Label(self, height=1, width=40, text='name2:')
-		self.lb6 = tk.Label(self, height=1, width=40, text='token2:')
-		self.txtw1 = tk.Text(self , height = 1 , width = 20) 
-		self.txtw2 = tk.Text(self , height = 1 , width = 20)
-		self.txtw3 = tk.Text(self , height = 1 , width = 20)
-		self.txtw4 = tk.Text(self , height = 1 , width = 20)
-		self.btn1 = tk.Button(self, height=2, width=20, text="看結果" , command = self.click_btn1)
-		self.cvsMain = tk.Canvas(self , width = 100 , height = 80 , bg = 'white')
-		
-		
-		self.lb1.grid(row=1, column=0, columnspan=1)
-		self.lb2.grid(row=2, column=0, columnspan=1)
-		self.lb3.grid(row=3, column=0, columnspan=1)
-		self.lb4.grid(row=4, column=0, columnspan=1)
-		self.lb5.grid(row=5, column=0, columnspan=1)
-		self.lb6.grid(row=6, column=0, columnspan=1)
-		self.txtw1.grid(row=2, column=1, columnspan=2) 
-		self.txtw2.grid(row=3, column=1, columnspan=2)
-		self.txtw3.grid(row=5, column=1, columnspan=2)
-		self.txtw4.grid(row=6, column=1, columnspan=2)
-		self.btn1.grid(row=1,rowspan=6, column=3,sticky=tk.N+tk.S)
-		self.cvsMain.grid(row = 7 , columnspan = 4 , column = 0 , sticky = tk.NE + tk.SW)
+    def __init__(self):
+        tk.Frame.__init__(self)
+        self.grid()
+        self.create_widgets()
+        
+    def create_widgets(self):
+        self.lb1 = tk.Label(self, height=1, width=40, text='GUY1')
+        self.lb2 = tk.Label(self, height=1, width=40, text='name1:')
+        self.lb3 = tk.Label(self, height=1, width=40, text='token1:')
+        self.lb4 = tk.Label(self, height=1, width=40, text='GUY2')
+        self.lb5 = tk.Label(self, height=1, width=40, text='name2:')
+        self.lb6 = tk.Label(self, height=1, width=40, text='token2:')
+        self.txtw1 = tk.Text(self , height = 1 , width = 20) 
+        self.txtw2 = tk.Text(self , height = 1 , width = 20)
+        self.txtw3 = tk.Text(self , height = 1 , width = 20)
+        self.txtw4 = tk.Text(self , height = 1 , width = 20)
+        self.btn1 = tk.Button(self, height=2, width=20, text="看結果" , command = self.click_btn1)
+        self.cvsMain = tk.Canvas(self , width = 100 , height = 80 , bg = 'white')
+        
+        
+        self.lb1.grid(row=1, column=0, columnspan=1)
+        self.lb2.grid(row=2, column=0, columnspan=1)
+        self.lb3.grid(row=3, column=0, columnspan=1)
+        self.lb4.grid(row=4, column=0, columnspan=1)
+        self.lb5.grid(row=5, column=0, columnspan=1)
+        self.lb6.grid(row=6, column=0, columnspan=1)
+        self.txtw1.grid(row=2, column=1, columnspan=2) 
+        self.txtw2.grid(row=3, column=1, columnspan=2)
+        self.txtw3.grid(row=5, column=1, columnspan=2)
+        self.txtw4.grid(row=6, column=1, columnspan=2)
+        self.btn1.grid(row=1,rowspan=6, column=3,sticky=tk.N+tk.S)
+        self.cvsMain.grid(row = 7 , columnspan = 4 , column = 0 , sticky = tk.NE + tk.SW)
 
 
-	def click_btn1(self):
-		pass 
-		#看按完按鈕要幹嘛加你們的程式碼
-		#可以寫成按完button後顯示在空的那個canvas上面
+    def click_btn1(self):
+        pass 
+        #看按完按鈕要幹嘛加你們的程式碼
+        #可以寫成按完button後顯示在空的那個canvas上面
 
 class Window(tk.Frame):
-	def __init__(self):
-		tk.Frame.__init__(self)
-		self.grid()
-		self.create_widgets()
-	def create_widgets(self):
+    def __init__(self):
+        tk.Frame.__init__(self)
+        self.grid()
+        self.create_widgets()
+    def create_widgets(self):
         
-		self.lb1 = tk.Label(self, height=1, width=80, text=" ")
-		self.lb2 = tk.Label(self, height=1, width=80, text=" ")
-		self.lb3 = tk.Label(self, height=1, width=80, text=" ")
-		self.lb4 = tk.Label(self, height=1, width=80, text=" ")
-		self.lb5 = tk.Label(self, height=1, width=80, text=" ")
-		self.lb6 = tk.Label(self, height=1, width=80, text=" ")
-		self.lb7 = tk.Label(self, height=1, width=80, text=" ")
-		self.btn1 = tk.Button(self, height=2, width=40, text="使用說明" , command = self.click_btn1)
-		self.btn2 = tk.Button(self, height=2, width=40, text="開始使用" , command = self.click_btn2)
-		
-		self.lb1.grid(row=1, column=0, columnspan=4)
-		self.lb2.grid(row=2, column=0, columnspan=4)
-		self.lb3.grid(row=3, column=0, columnspan=4)
-		self.lb4.grid(row=4, column=0, columnspan=4)
-		self.lb5.grid(row=5, column=0, columnspan=4)
-		self.lb6.grid(row=6, column=0, columnspan=4)
-		self.lb7.grid(row=7, column=0, columnspan=4)
-		self.btn1.grid(row=0, column=0)
-		self.btn2.grid(row=0, column=2)
-		
-	def click_btn1(self):
-		
-		self.lb1.configure(text='1.上https://developers.facebook.com/docs/graph-api?locale=zh_TW 註冊                                                 ')
-		self.lb2.configure(text='2.點擊上方「工具」選項，選取圖形API測試工具                                                                                                      ')
-		self.lb3.configure(text='3.登入自己的FB帳號，進入自己的塗鴉牆，複製網址                                                                                                 ')
-		self.lb4.configure(text='4.將剛才複製的網址貼到「取得權杖」，將以下選項打勾：user hommetown, user posts, user likes             ')
-		self.lb5.configure(text='5.按「取得存取權杖」，跑出的一行字即為自己的access token                                                                             ')
-		self.lb6.configure(text='6.點擊下方「提交」，出現id和name                                                                                                                           ')
-		self.lb7.configure(text='祝您有好的使用體驗！                                                                                                                                                     ')
-	
-	def click_btn2(self):
-		Begin()
+        self.lb1 = tk.Label(self, height=1, width=80, text=" ")
+        self.lb2 = tk.Label(self, height=1, width=80, text=" ")
+        self.lb3 = tk.Label(self, height=1, width=80, text=" ")
+        self.lb4 = tk.Label(self, height=1, width=80, text=" ")
+        self.lb5 = tk.Label(self, height=1, width=80, text=" ")
+        self.lb6 = tk.Label(self, height=1, width=80, text=" ")
+        self.lb7 = tk.Label(self, height=1, width=80, text=" ")
+        self.btn1 = tk.Button(self, height=2, width=40, text="使用說明" , command = self.click_btn1)
+        self.btn2 = tk.Button(self, height=2, width=40, text="開始使用" , command = self.click_btn2)
+        
+        self.lb1.grid(row=1, column=0, columnspan=4)
+        self.lb2.grid(row=2, column=0, columnspan=4)
+        self.lb3.grid(row=3, column=0, columnspan=4)
+        self.lb4.grid(row=4, column=0, columnspan=4)
+        self.lb5.grid(row=5, column=0, columnspan=4)
+        self.lb6.grid(row=6, column=0, columnspan=4)
+        self.lb7.grid(row=7, column=0, columnspan=4)
+        self.btn1.grid(row=0, column=0)
+        self.btn2.grid(row=0, column=2)
+        
+    def click_btn1(self):
+        
+        self.lb1.configure(text='1.上https://developers.facebook.com/docs/graph-api?locale=zh_TW 註冊                                                 ')
+        self.lb2.configure(text='2.點擊上方「工具」選項，選取圖形API測試工具                                                                                                      ')
+        self.lb3.configure(text='3.登入自己的FB帳號，進入自己的塗鴉牆，複製網址                                                                                                 ')
+        self.lb4.configure(text='4.將剛才複製的網址貼到「取得權杖」，將以下選項打勾：user hommetown, user posts, user likes             ')
+        self.lb5.configure(text='5.按「取得存取權杖」，跑出的一行字即為自己的access token                                                                             ')
+        self.lb6.configure(text='6.點擊下方「提交」，出現id和name                                                                                                                           ')
+        self.lb7.configure(text='祝您有好的使用體驗！                                                                                                                                                     ')
+    
+    def click_btn2(self):
+        Begin()
 
-		
+
 mywindow = Window()
 mywindow.master.title("my window")
 mywindow.mainloop()
@@ -135,8 +135,8 @@ guy1_list = []#新增
 guy2_list = []#新增
 
 while user_counter <=1:
-    id = input("please enter your id   ").strip()   #輸入id
-    access_token = input("please enter your access token   ") .strip()  #輸入access token 取得token 時須取得name hometown likes posts之權限
+    id = input("please enter your id").strip()   #輸入id
+    access_token = input("please enter your access token") .strip()  #輸入access token 取得token 時須取得name hometown likes posts之權限
     url_model = "https://graph.facebook.com/v2.9/iidd?fields=xxxxx&access_token=" + access_token  #網址模板
     url = url_model.replace("iidd", id)   #網址
     fields = ["name","hometown", "posts","likes"]
@@ -243,8 +243,8 @@ seg_list2 = list(jieba.cut_for_search(guy2_str))
 seg_list1_1 = list(jieba.cut(guy1_str))#第二種切法
 seg_list2_1 = list(jieba.cut(guy2_str))
 
-guy1_tags = list(jieba.analyse.extract_tags(guy1_str, 20))#取出10大關鍵字
-guy2_tags = list(jieba.analyse.extract_tags(guy2_str, 20))
+guy1_tags = list(jieba.analyse.extract_tags(guy1_str, 50))#取出10大關鍵字
+guy2_tags = list(jieba.analyse.extract_tags(guy2_str, 50))
 
 """
 print(seg_list1)
@@ -252,24 +252,27 @@ print(seg_list2)
 print(seg_list1_1)
 print(seg_list2_1)
 """
+
+
+output_guy1_tags = guy1_tags[0:21]
+output_guy2_tags = guy2_tags[0:21]
+
+print("GUY1:你文章中的熱門標籤是:「",output_guy1_tags,"」")
+print()
+print("GUY2:你文章中的熱門標籤是:「",output_guy2_tags,"」")
+print()
+
 common_tags = []#兩人有同樣tag的話
 for i in range(len(guy1_tags)):
     if guy1_tags[i] in guy2_tags:
         common_tags.append(guy1_tags[i])
-      
-print("第一個人臉書常出現的關鍵字:")	  
-print(guy1_tags)
-print()
-print("第二個人臉書常出現的關鍵字")
-print(guy2_tags)
-print()
 if common_tags == []:
     print("你們共同興趣好像不多欸，分享一下自己喜歡什麼來讓對方了解你吧")
 else:
     common_tags = "、".join(common_tags)
-    
-    print("~~~~~~"+common_tags+"~~~~~~  這些字都常常出現在你們的文章中呢!!交流一下彼此意見吧~")
-	
+    print("「",common_tags,"」這些字都出現在你們的熱門標籤了呢!!來交流一下吧~")
+
+
 com_level = 0#計算相似度用的變數
 weight = 0#加成器
 x = len(seg_list1)#x:guy1_list數量
@@ -295,13 +298,11 @@ for j in range(n):
         #print("我加三")
 
 adjust_weight = (weight/100) + 1
-print(adjust_weight,com_level)
+#print(adjust_weight,com_level)
 common_final_score = ((com_level*adjust_weight*200)*100) / ((x+2*n)*(n+201))
-
 
 if common_final_score >= 100:
     common_final_score =100
 
 
 print("你們的相似度是",int(common_final_score),"%")
-print()
