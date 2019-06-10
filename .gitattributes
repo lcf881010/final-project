@@ -84,36 +84,44 @@ class Window(tk.Frame):
 mywindow = Window()
 mywindow.master.title("my window")
 mywindow.mainloop()
-
-
-
 import requests
 import json
 
-
 def appenddata(d):
-    """
-    把使用者資料匯成一個list
-    """
     if user_counter == 0:
         info["GUY1"].append(d)
 
     else:
         info["GUY2"].append(d)
 
-def printer(y):
+def get_message_and_name_first(y):#把print功能拿掉只把message(發文內容)和name(分享或按讚的專頁)拿出來(GUY1)
     for i in range(4):
         if i == 3:
             for t in range(len(info[y][3])):
-                print(info[y][3][t]["name"], info[y][3][t]["created_time"])
-
+                #print(info[y][3][t]["name"], info[y][3][t]["created_time"])
+                guy1_list.append(info[y][3][t]["name"])#新增
         elif i == 2:
             for t in range(len(info[y][2])):
                 if "message" in info[y][2][t]:
-                    print(info[y][2][t]["message"], info[y][2][t]["created_time"])
+                    #print(info[y][2][t]["message"], info[y][2][t]["created_time"])
+                    guy1_list.append(info[y][2][t]["message"])#新增
+        #else:
+            #print(info[y][i])
 
-        else:
-            print(info[y][i])
+def get_message_and_name_second(y):#把print功能拿掉只把message(發文內容)和name(分享或按讚的專頁)拿出來(GUY2)
+    for i in range(4):
+        if i == 3:
+            for t in range(len(info[y][3])):
+                #print(info[y][3][t]["name"], info[y][3][t]["created_time"])
+                guy2_list.append(info[y][3][t]["name"])#新增
+        elif i == 2:
+            for t in range(len(info[y][2])):
+                if "message" in info[y][2][t]:
+                    #print(info[y][2][t]["message"], info[y][2][t]["created_time"])
+                    guy2_list.append(info[y][2][t]["message"])#新增
+        #else:
+            #print(info[y][i])
+#因為要把兩個不同人的文章分開所以開兩個函式和list
 
     print("____________________________________________________________________________________________________________")
 
@@ -122,10 +130,11 @@ info["GUY1"] = []
 info["GUY2"] = []
 user_counter = 0
 
+
+guy1_list = []#新增
+guy2_list = []#新增
+
 while user_counter <=1:
-    """
-	讓使用者input其id和access token
-    """
     id = input("please enter your id   ").strip()   #輸入id
     access_token = input("please enter your access token   ") .strip()  #輸入access token 取得token 時須取得name hometown likes posts之權限
     url_model = "https://graph.facebook.com/v2.9/iidd?fields=xxxxx&access_token=" + access_token  #網址模板
@@ -133,16 +142,11 @@ while user_counter <=1:
     fields = ["name","hometown", "posts","likes"]
 
     for f in fields:
-        """
-        爬下使用者的資料(包括 : 名子, 家鄉, 貼文內容, 按過讚的粉專)
-        匯到 info 這個 dictionary
-        兩個人的資料會分別匯到 GUY1 和 GUY2 兩個 list
-        """	
         initial_url = url.replace("xxxxx", f)
         response = requests.get(initial_url)
         if f == "name" or f == "hometown":
             html = json.loads(response.text)
-            if f in html:
+            if f in html:#print(html[f])
                 appenddata(html[f])
             else:
                 appenddata("None")
@@ -150,6 +154,7 @@ while user_counter <=1:
         else:
             html = json.loads(response.text)
             page_counter = 0
+            #print(html[f]["data"])
             appenddata(html[f]["data"])
 
             while True:
@@ -159,12 +164,16 @@ while user_counter <=1:
                     html = json.loads(response.text)
                     page_counter += 1
 
+                    #if f in html:
                     if "next" in html :
+                        #print(html["data"])
                         appenddata(html["data"])
 
                     else:
                         break
 
+                    #else:
+                        #appenddata("None")
 
                 elif page_counter >= 1:
                     sub_url = html["paging"]["next"]
@@ -172,19 +181,22 @@ while user_counter <=1:
                     html = json.loads(response.text)
                     page_counter += 1
 
+                    #if f in html:
                     if "next" in html:
+                        #print(html["data"])
                         appenddata(html["data"])
 
                     else:
                         break
 
+                    #else:
+                        #appenddata("None")
 
     user_counter += 1
 
-printer("GUY1")#改成新的函式
-printer("GUY2")#改成新的函式
+get_message_and_name_first("GUY1")#改成新的函式
+get_message_and_name_second("GUY2")#改成新的函式
 #print(info)
-
 
 #print(guy1_list)#確認list內容
 #print(guy2_list)
