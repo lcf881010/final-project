@@ -126,8 +126,8 @@ while user_counter <=1:
     """
 	讓使用者input其id和access token
     """
-    id = input("please enter your id").strip()   #輸入id
-    access_token = input("please enter your access token") .strip()  #輸入access token 取得token 時須取得name hometown likes posts之權限
+    id = input("please enter your id   ").strip()   #輸入id
+    access_token = input("please enter your access token   ") .strip()  #輸入access token 取得token 時須取得name hometown likes posts之權限
     url_model = "https://graph.facebook.com/v2.9/iidd?fields=xxxxx&access_token=" + access_token  #網址模板
     url = url_model.replace("iidd", id)   #網址
     fields = ["name","hometown", "posts","likes"]
@@ -181,6 +181,115 @@ while user_counter <=1:
 
     user_counter += 1
 
-printer("GUY1")
-printer("GUY2")
-print(info)
+printer("GUY1")#改成新的函式
+printer("GUY2")#改成新的函式
+#print(info)
+
+
+#print(guy1_list)#確認list內容
+#print(guy2_list)
+
+
+#import jieba.analyse
+#jieba.set_dictionary("jieba_dict/dict.txt.big")
+
+#message_tag = "".join(messagelist)
+
+#message_tag = jieba.analyse.extract_tags(line,topK=10,withWeight=True)
+#for tag, weight in tags:
+    #print(tag + "," + str(int(weight * 10000)))
+
+import re
+def remove_symbol(string):#為了去掉不相關字元的函式
+    symbol_pattern = re.compile("["
+                                u"\U00000021-\U0000002E"  # !~.
+                                u"\U0000003A-\U00000040"  # :~@   
+                                u"\U0000005B-\U00000060"  # [~`
+                                u"\U0000FF1A-\U0000FF20"  # 全形符號
+                                u"\U0000007B-\U00002E49"
+                                u"\U0000FF3B-\U0000FF40"  # 全形符號
+                                u"\U00002FF0-\U000033FF"  # 表意象符號、中日韓符號標點   
+                                u"\U0000FF5B-\U0000FFFF"
+                                u"\U00010000-\U000E01EF"
+                                u"\U0000FB00-\U0000FF0F"  # 字母表達形式、阿拉伯字母、豎排、組合用符號
+                                "]+", flags=re.UNICODE)
+    return symbol_pattern.sub(r'', string)
+
+
+guy1_str = str("".join(guy1_list))#guy1要分解的str
+guy2_str = str("".join(guy2_list))#guy2要分解的str
+guy1_str = remove_symbol(guy1_str)
+guy2_str = remove_symbol(guy2_str)
+
+import jieba
+import jieba.analyse
+
+jieba.set_dictionary('dict.txt.big.txt')#繁中字典，下載到桌面
+
+seg_list1 = list(jieba.cut_for_search(guy1_str))#切詞句，搜索引擎模式
+seg_list2 = list(jieba.cut_for_search(guy2_str))
+seg_list1_1 = list(jieba.cut(guy1_str))#第二種切法
+seg_list2_1 = list(jieba.cut(guy2_str))
+
+guy1_tags = list(jieba.analyse.extract_tags(guy1_str, 20))#取出10大關鍵字
+guy2_tags = list(jieba.analyse.extract_tags(guy2_str, 20))
+
+"""
+print(seg_list1)
+print(seg_list2)
+print(seg_list1_1)
+print(seg_list2_1)
+"""
+common_tags = []#兩人有同樣tag的話
+for i in range(len(guy1_tags)):
+    if guy1_tags[i] in guy2_tags:
+        common_tags.append(guy1_tags[i])
+      
+print("第一個人臉書常出現的關鍵字:")	  
+print(guy1_tags)
+print()
+print("第二個人臉書常出現的關鍵字")
+print(guy2_tags)
+print()
+if common_tags == []:
+    print("你們共同興趣好像不多欸，分享一下自己喜歡什麼來讓對方了解你吧")
+else:
+    common_tags = "、".join(common_tags)
+    
+    print("~~~~~~"+common_tags+"~~~~~~  這些字都常常出現在你們的文章中呢!!交流一下彼此意見吧~")
+	
+com_level = 0#計算相似度用的變數
+weight = 0#加成器
+x = len(seg_list1)#x:guy1_list數量
+n = len(guy1_tags)#n:取的tag數量
+for i in range (x):
+    if (seg_list1[i] in seg_list2) and (seg_list1[i] not in guy2_tags):#如果在對方list裡面，就+1(基本分)
+        com_level += 1
+        #print("我加一")
+    elif (seg_list1[i] in seg_list2) and (seg_list1[i] in guy2_tags):#如果在對方tag裡面，再+1(意思是這個字詞+2)
+        com_level += 2
+#print(com_level)
+
+
+for j in range(n):
+    if (guy1_tags[j] in guy2_tags):
+    #在自己tag也在對方tag裡，就再+1(這個詞3分)，且加成(2n-a-b)/2n
+    #n:取的tag數量、a:在guy1_tag的排序、b:在guy2_tag的排序
+        com_level += 1
+
+        a = int(j)#第一個是0
+        b = int(guy2_tags.index(guy1_tags[j]))
+        weight += ((n*2)-(a+b)) / (n*2)#如果完全相同則加成器為(n+1)/2
+        #print("我加三")
+
+adjust_weight = (weight/100) + 1
+print(adjust_weight,com_level)
+common_final_score = ((com_level*adjust_weight*200)*100) / ((x+2*n)*(n+201))
+
+
+if common_final_score >= 100:
+    common_final_score =100
+
+
+print("你們的相似度是",int(common_final_score),"%")
+print()
