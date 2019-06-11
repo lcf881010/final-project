@@ -306,3 +306,77 @@ if common_final_score >= 100:
 
 
 print("你們的相似度是",int(common_final_score),"%")
+
+import tkinter
+from tkinter import *
+import tkinter.font as tkFont
+from PIL import ImageTk, Image
+
+if common_final_score < 20:
+	window2 = tkinter.Tk()
+	window2.title("Mail Patterns")
+	window2.geometry("1025x352")
+
+	text2 = tkinter.Text(window2, height = 30, width = 43)
+	photo = tkinter.PhotoImage(file = '握手.png')
+	text2.image_create(END, image = photo)
+	text2.pack(side = LEFT)
+
+	scroll = tkinter.Scrollbar()
+	f = tkFont.Font(size = 16, family = "微軟正黑體")
+	text1 = tkinter.Text(window2, width = 200, height = 10, font = f)
+
+	scroll.pack(side=tkinter.RIGHT,fill=tkinter.Y)
+	text1.pack(side=tkinter.LEFT,fill=tkinter.Y)
+
+	scroll.config(command=text1.yview)
+	text1.config(yscrollcommand=scroll.set)
+	
+	str1 = "\t我們的相似度是" + str(common_final_score) + "。\n"
+	str2 = """
+	嗨！很可惜我們的相似度很低哈哈哈！\n
+	雖然我們沒有match到，不但還是可以做個朋友啊！\n
+	我很喜歡 __________，不知道你的興趣有那些呢？\n
+	我的個性 ____________，你的個性呢？說不定跟我很合喔！\n
+	如果你願意跟我做朋友吧，分享給我吧！
+                                                                                                 ___________"""
+	
+	text1.insert(tkinter.INSERT,str1)
+	text1.insert(tkinter.INSERT,str2)
+
+	window2.mainloop()
+
+else:
+	window2 = tkinter.Tk()
+	window2.title("Mail Patterns")
+	window2.geometry("1025x260")
+
+	text2 = tkinter.Text(window2, height = 30, width = 43)
+	photo = tkinter.PhotoImage(file = '握手.png')
+	text2.image_create(END, image = photo)
+	text2.pack(side = LEFT)
+
+	scroll = tkinter.Scrollbar()
+	f = tkFont.Font(size = 16, family = "微軟正黑體")
+	text1 = tkinter.Text(window2, width = 200, height = 10, font = f)
+
+	scroll.pack(side=tkinter.RIGHT,fill=tkinter.Y)
+	text1.pack(side=tkinter.LEFT,fill=tkinter.Y)
+
+	scroll.config(command=text1.yview)
+	text1.config(yscrollcommand=scroll.set)
+
+	str1 = "我們的共同字是" , common_tags , "。\n"
+	str2 = "我們的相似度是" , common_final_score , "。\n"
+	str3 = """
+	嗨！很開心能找到一個跟我發文內容相似度這麼高的人哈哈哈！\n
+	既然我們很match，不如就做個朋友吧！\n
+	我很喜歡 __________，不知道你的興趣有那些呢？\n
+	我的個性 ____________，你的個性呢？說不定跟我很合喔！\n
+	如果你願意跟我做朋友吧，分享給我吧！
+                                                                                                 													___________"""
+
+	text1.insert(tkinter.INSERT,str1)
+	text1.insert(tkinter.INSERT,str2)
+	text1.insert(tkinter.INSERT,str3)
+	window2.mainloop()
