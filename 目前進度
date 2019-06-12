@@ -1,0 +1,164 @@
+from tkinter import *
+import tkinter.messagebox as tm
+import tkinter.font as tkFont
+#from PLL import ImageTk, Image
+
+root = Tk()
+myLabel1 = Label(root, text='使用說明')
+myLabel1.grid(row=0,column=0,columnspan=2)
+
+myLabel1 = Label(root, text='1.上https://developers.facebook.com/docs/graph-api?locale=zh_TW 註冊                                                 ')
+myLabel1.grid(row=2,column=0,columnspan=2)
+		
+myLabel2 = Label(root, text='2.點擊上方「工具」選項，選取圖形API測試工具                                                                                                      ')
+myLabel2.grid(row=3,column=0,columnspan=2)
+		
+myLabel3 = Label(root, text='3.登入自己的FB帳號，進入自己的塗鴉牆，複製網址                                                                                                 ')
+myLabel3.grid(row=4,column=0,columnspan=2)
+		
+myLabel4 = Label(root, text='4.將剛才複製的網址貼到「取得權杖」，將以下選項打勾：user hommetown, user posts, user likes             ')
+myLabel4.grid(row=5,column=0,columnspan=2)
+	
+myLabel5 = Label(root, text='5.按「取得存取權杖」，跑出的一行字即為自己的access token                                                                             ')
+myLabel5.grid(row=6,column=0,columnspan=2)
+		
+myLabel6 = Label(root, text='6.點擊下方「提交」，出現id和name                                                                                                                           ')
+myLabel6.grid(row=7,column=0,columnspan=2)
+		
+myLabel7 = Label(root, text='祝您有好的使用體驗！                                                                                                                                                     ')
+myLabel7.grid(row=8,column=0,columnspan=2)
+
+
+
+
+#這三個按鈕要加上背後使用者和id(看爬蟲怎麼做要配合進來)
+def click_btn1():
+	global name_1
+	global id_1
+	global name_2
+	global id_2
+	name_1 = x1.get()
+	id_1 = x2.get()
+	name_2 = x3.get()
+	id_2 = x4.get()
+
+def click_btn2():
+    pass
+	#可以把message地方用一個函數取代，函數裡面放第二個人的常用字
+	
+#common_final_score = 10
+def click_btn3():
+	if common_final_score < 20:
+		window2 = Tk()
+		window2.title("Mail Patterns")
+		window2.geometry("1025x352")
+
+		text2 = Text(window2, height = 30, width = 43)
+		photo = PhotoImage(file = '握手.png')
+		text2.image_create(END, image = photo)
+		text2.pack(side = LEFT)
+
+		scroll = Scrollbar()
+		f = tkFont.Font(size = 16, family = "微軟正黑體")
+		text1 = Text(window2, width = 200, height = 10, font = f)
+
+		scroll.pack(side=RIGHT,fill=Y)
+		text1.pack(side=LEFT,fill=Y)
+
+		scroll.config(command=text1.yview)
+		text1.config(yscrollcommand=scroll.set)
+	
+		str1 = "\t我們的相似度是" + str(common_final_score) + "。\n"
+		str2 = """
+		嗨！很可惜我們的相似度很低哈哈哈！\n
+		雖然我們沒有match到，不但還是可以做個朋友啊！\n
+		我很喜歡 __________，不知道你的興趣有那些呢？\n
+		我的個性 ____________，你的個性呢？說不定跟我很合喔！\n
+		如果你願意跟我做朋友吧，分享給我吧！
+                                                                                                 ___________"""
+	
+		text1.insert(INSERT,str1)
+		text1.insert(INSERT,str2)
+
+		window2.mainloop()
+
+	else:
+		window2 = Tk()
+		window2.title("Mail Patterns")
+		window2.geometry("1025x260")
+
+		text2 = Text(window2, height = 30, width = 43)
+		photo = PhotoImage(file = '握手.png')
+		text2.image_create(END, image = photo)
+		text2.pack(side = LEFT)
+
+		scroll = Scrollbar()
+		f = tkFont.Font(size = 16, family = "微軟正黑體")
+		text1 = Text(window2, width = 200, height = 10, font = f)
+
+		scroll.pack(side=RIGHT,fill=Y)
+		text1.pack(side=LEFT,fill=Y)
+
+		scroll.config(command=text1.yview)
+		text1.config(yscrollcommand=scroll.set)
+
+		str1 = "我們的共同字是" , common_tags , "。\n"
+		str2 = "我們的相似度是" , common_final_score , "。\n"
+		str3 = """
+		嗨！很開心能找到一個跟我發文內容相似度這麼高的人哈哈哈！\n
+		既然我們很match，不如就做個朋友吧！\n
+		我很喜歡 __________，不知道你的興趣有那些呢？\n
+		我的個性 ____________，你的個性呢？說不定跟我很合喔！\n
+		如果你願意跟我做朋友吧，分享給我吧！
+                                                                                                 													___________"""
+
+		text1.insert(INSERT,str1)
+		text1.insert(INSERT,str2)
+		text1.insert(INSERT,str3)
+		window2.mainloop()
+	
+lb = Label(root,height=1, width=20, text='開始使用')
+lb1 = Label(root,height=1, width=20, text='GUY1')
+lb2 = Label(root, height=1, width=20, text='name1:')
+lb3 = Label(root, height=1, width=20, text='token1:')
+lb4 = Label(root, height=1, width=20, text='GUY2')
+lb5 = Label(root,height=1, width=20, text='name2:')
+lb6 = Label(root,height=1, width=20, text='token2:')
+	
+x1 = StringVar()
+x2 = StringVar()
+x3 = StringVar()
+x4 = StringVar()
+txtw1 = Entry(root, textvariable =x1) 
+txtw2 = Entry(root,textvariable =x2)
+txtw3 = Entry(root,textvariable =x3)
+txtw4 = Entry(root,textvariable =x4)
+x1.set('')
+x2.set('')
+x3.set('')
+x4.set('')
+		
+
+
+lb.grid(row=9, column=0, columnspan=1)		
+lb1.grid(row=10, column=0, columnspan=1)
+lb2.grid(row=11, column=0, columnspan=1)
+lb3.grid(row=12, column=0, columnspan=1)
+lb4.grid(row=13, column=0, columnspan=1)
+lb5.grid(row=14, column=0, columnspan=1)
+lb6.grid(row=15, column=0, columnspan=1)
+txtw1.grid(row=11, column=1, columnspan=1) 
+txtw2.grid(row=12, column=1, columnspan=1)
+txtw3.grid(row=14, column=1, columnspan=1)
+txtw4.grid(row=15, column=1, columnspan=1)
+
+
+btn1 = Button(root,height=2, width=20, text="GUY1常用字" , command = click_btn1)
+btn2 = Button(root,height=2, width=20, text="GUY2常用字" , command = click_btn2)		
+btn3 = Button(root,height=2, width=20, text="看兩人比較" , command = click_btn3)
+btn1.grid(row=10,rowspan=2, column=2)
+btn2.grid(row=12,rowspan=2, column=2)
+btn3.grid(row=14,rowspan=2, column=2)
+
+
+root.mainloop()
