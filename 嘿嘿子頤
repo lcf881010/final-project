@@ -1,5 +1,7 @@
 from tkinter import *
 import tkinter.messagebox as tm
+import requests
+import json
 
 root = Tk()
 myLabel1 = Label(root, text='使用說明')
@@ -61,131 +63,135 @@ txtw2.grid(row=12, column=1, columnspan=1)
 txtw3.grid(row=14, column=1, columnspan=1)
 txtw4.grid(row=15, column=1, columnspan=1)
 
-
 def click_btn():
-	global name_1
-	global id_1
-	global name_2
-	global id_2
+
 	name_1 = x1.get()
 	id_1 = x2.get()
 	name_2 = x3.get()
 	id_2 = x4.get()
-import requests
-import json
 
-def appenddata(d):
-    if flag == True:
-        info["GUY1"].append(d)
+	def appenddata(d):
+		if flag == True:
+			info["GUY1"].append(d)
 
-    else:
-        info["GUY2"].append(d)
+		else:
+			info["GUY2"].append(d)
 
-def get_message_and_name_first(y):#把print功能拿掉只把message(發文內容)和name(分享或按讚的專頁)拿出來(GUY1)
-    for i in range(4):
-        if i == 3:
-            for t in range(len(info[y][3])):
+
+
+
+
+	def get_message_and_name_first(y):#把print功能拿掉只把message(發文內容)和name(分享或按讚的專頁)拿出來(GUY1)
+		for i in range(4):
+			if i == 3:
+				for t in range(len(info[y][3])):
                 #print(info[y][3][t]["name"], info[y][3][t]["created_time"])
-                guy1_list.append(info[y][3][t]["name"])#新增
-        elif i == 2:
-            for t in range(len(info[y][2])):
-                if "message" in info[y][2][t]:
+					guy1_list.append(info[y][3][t]["name"])#新增
+			elif i == 2:
+				for t in range(len(info[y][2])):
+					if "message" in info[y][2][t]:
                     #print(info[y][2][t]["message"], info[y][2][t]["created_time"])
-                    guy1_list.append(info[y][2][t]["message"])#新增
+						guy1_list.append(info[y][2][t]["message"])#新增
         #else:
             #print(info[y][i])
 
-def get_message_and_name_second(y):#把print功能拿掉只把message(發文內容)和name(分享或按讚的專頁)拿出來(GUY2)
-    for i in range(4):
-        if i == 3:
-            for t in range(len(info[y][3])):
+	def get_message_and_name_second(y):#把print功能拿掉只把message(發文內容)和name(分享或按讚的專頁)拿出來(GUY2)
+		for i in range(4):
+			if i == 3:
+				for t in range(len(info[y][3])):
                 #print(info[y][3][t]["name"], info[y][3][t]["created_time"])
-                guy2_list.append(info[y][3][t]["name"])#新增
-        elif i == 2:
-            for t in range(len(info[y][2])):
-                if "message" in info[y][2][t]:
+					guy2_list.append(info[y][3][t]["name"])#新增
+			elif i == 2:
+				for t in range(len(info[y][2])):
+					if "message" in info[y][2][t]:
                     #print(info[y][2][t]["message"], info[y][2][t]["created_time"])
                     guy2_list.append(info[y][2][t]["message"])#新增
-        #else:
-            #print(info[y][i])
-#因為要把兩個不同人的文章分開所以開兩個函式和list
+			#else:
+				#print(info[y][i])
+	#因為要把兩個不同人的文章分開所以開兩個函式和list
 
-    print("____________________________________________________________________________________________________________")
+		print("____________________________________________________________________________________________________________")
 
-info = dict()
-info["GUY1"] = []
-info["GUY2"] = []
+	info = dict()
+	info["GUY1"] = []
+	info["GUY2"] = []
 
 
-guy1_list = []#新增
-guy2_list = []#新增
+	guy1_list = []#新增
+	guy2_list = []#新增
 
-for guy in range(2):
-	if guy == 0:
-		id = name_1.strip()#輸入id
+	for guy in range(2):
+
+	
+	
+		if guy == 0:
+		id = name_1.strip()   #輸入id
 		access_token = id_1.strip()  #輸入access token 取得token 時須取得name hometown likes posts之權限
 		flag = True
-	else:
+      
+		else:
 		id = name_2.strip()
 		access_token = id_2.strip()	  
 		flag = False
-	url_model = "https://graph.facebook.com/v2.9/iidd?fields=xxxxx&access_token=" + access_token  #網址模板
-	url = url_model.replace("iidd", id)   #網址
-	fields = ["name","hometown", "posts","likes"]
-	for f in fields:
-		initial_url = url.replace("xxxxx", f)
-		response = requests.get(initial_url)
-		if f == "name" or f == "hometown":
-			html = json.loads(response.text)
-			if f in html:#print(html[f])
-				appenddata(html[f])
+      
+		url_model = "https://graph.facebook.com/v2.9/iidd?fields=xxxxx&access_token=" + access_token  #網址模板
+		url = url_model.replace("iidd", id)   #網址
+		fields = ["name","hometown", "posts","likes"]
+
+		for f in fields:
+			initial_url = url.replace("xxxxx", f)
+			response = requests.get(initial_url)
+			if f == "name" or f == "hometown":
+				html = json.loads(response.text)
+				if f in html:#print(html[f])
+					appenddata(html[f])
+				else:
+					appenddata("None")
+
 			else:
-				appenddata("None")
+				html = json.loads(response.text)
+				page_counter = 0
+            #print(html[f]["data"])
+				appenddata(html[f]["data"])
 
-		else:
-			html = json.loads(response.text)
-			page_counter = 0
-			#print(html[f]["data"])
-			appenddata(html[f]["data"])
-
-			while True:
-				if page_counter < 1:
-					sub_url = html[f]["paging"]["next"]
-					response = requests.get(sub_url)
-					html = json.loads(response.text)
-					page_counter += 1
+				while True:
+					if page_counter < 1:
+						sub_url = html[f]["paging"]["next"]
+						response = requests.get(sub_url)
+						html = json.loads(response.text)
+						page_counter += 1
 
                     #if f in html:
-					if "next" in html :
+						if "next" in html :
                         #print(html["data"])
-						appenddata(html["data"])
+							appenddata(html["data"])
 
-					else:
-						break
+						else:
+							break
 
                     #else:
                         #appenddata("None")
 
-				elif page_counter >= 1:
-					sub_url = html["paging"]["next"]
-					response = requests.get(sub_url)
-					html = json.loads(response.text)
-					page_counter += 1
+					elif page_counter >= 1:
+						sub_url = html["paging"]["next"]
+						response = requests.get(sub_url)
+						html = json.loads(response.text)
+						page_counter += 1
 
                     #if f in html:
-					if "next" in html:
+						if "next" in html:
                         #print(html["data"])
-						appenddata(html["data"])
+							appenddata(html["data"])
 
-					else:
-						break
+						else:
+							break
 
                     #else:
                         #appenddata("None")
 
 
-get_message_and_name_first("GUY1")#改成新的函式
-get_message_and_name_second("GUY2")#改成新的函式
+	get_message_and_name_first("GUY1")#改成新的函式
+	get_message_and_name_second("GUY2")#改成新的函式
 
 
 #print(info)
@@ -205,7 +211,7 @@ get_message_and_name_second("GUY2")#改成新的函式
 
 import re
 def remove_symbol(string):#為了去掉不相關字元的函式
-	symbol_pattern = re.compile("["
+    symbol_pattern = re.compile("["
                                 u"\U00000021-\U0000002E"  # !~.
                                 u"\U0000003A-\U00000040"  # :~@   
                                 u"\U0000005B-\U00000060"  # [~`
@@ -217,7 +223,7 @@ def remove_symbol(string):#為了去掉不相關字元的函式
                                 u"\U00010000-\U000E01EF"
                                 u"\U0000FB00-\U0000FF0F"  # 字母表達形式、阿拉伯字母、豎排、組合用符號
                                 "]+", flags=re.UNICODE)
-	return symbol_pattern.sub(r'', string)
+    return symbol_pattern.sub(r'', string)
 
 
 guy1_str = str("".join(guy1_list))#guy1要分解的str
@@ -249,15 +255,20 @@ print(seg_list2_1)
 output_guy1_tags = guy1_tags[0:21]
 output_guy2_tags = guy2_tags[0:21]
 
-#print("GUY1:你文章中的熱門標籤是:「",output_guy1_tags,"」")
-#print()
-#print("GUY2:你文章中的熱門標籤是:「",output_guy2_tags,"」")
-#print()
+print("GUY1:你文章中的熱門標籤是:「",output_guy1_tags,"」")
+print()
+print("GUY2:你文章中的熱門標籤是:「",output_guy2_tags,"」")
+print()
 
 common_tags = []#兩人有同樣tag的話
 for i in range(len(guy1_tags)):
-	if guy1_tags[i] in guy2_tags:
-		common_tags.append(guy1_tags[i])
+    if guy1_tags[i] in guy2_tags:
+        common_tags.append(guy1_tags[i])
+if common_tags == []:
+    print("你們共同興趣好像不多欸，分享一下自己喜歡什麼來讓對方了解你吧")
+else:
+    common_tags = "、".join(common_tags)
+    print("「",common_tags,"」這些字都出現在你們的熱門標籤了呢!!來交流一下吧~")
 
 
 com_level = 0#計算相似度用的變數
@@ -265,23 +276,23 @@ weight = 0#加成器
 x = len(seg_list1)#x:guy1_list數量
 n = len(guy1_tags)#n:取的tag數量
 for i in range (x):
-	if (seg_list1[i] in seg_list2) and (seg_list1[i] not in guy2_tags):#如果在對方list裡面，就+1(基本分)
-		com_level += 1
+    if (seg_list1[i] in seg_list2) and (seg_list1[i] not in guy2_tags):#如果在對方list裡面，就+1(基本分)
+        com_level += 1
         #print("我加一")
-	elif (seg_list1[i] in seg_list2) and (seg_list1[i] in guy2_tags):#如果在對方tag裡面，再+1(意思是這個字詞+2)
-		com_level += 2
+    elif (seg_list1[i] in seg_list2) and (seg_list1[i] in guy2_tags):#如果在對方tag裡面，再+1(意思是這個字詞+2)
+        com_level += 2
 #print(com_level)
 
 
 for j in range(n):
-	if (guy1_tags[j] in guy2_tags):
+    if (guy1_tags[j] in guy2_tags):
     #在自己tag也在對方tag裡，就再+1(這個詞3分)，且加成(2n-a-b)/2n
     #n:取的tag數量、a:在guy1_tag的排序、b:在guy2_tag的排序
-		com_level += 1
+        com_level += 1
 
-		a = int(j)#第一個是0
-		b = int(guy2_tags.index(guy1_tags[j]))
-		weight += ((n*2)-(a+b)) / (n*2)#如果完全相同則加成器為(n+1)/2
+        a = int(j)#第一個是0
+        b = int(guy2_tags.index(guy1_tags[j]))
+        weight += ((n*2)-(a+b)) / (n*2)#如果完全相同則加成器為(n+1)/2
         #print("我加三")
 
 adjust_weight = (weight/100) + 1
@@ -289,32 +300,63 @@ adjust_weight = (weight/100) + 1
 common_final_score = ((com_level*adjust_weight*200)*100) / ((x+2*n)*(n+201))
 
 if common_final_score >= 100:
-	common_final_score =100
+    common_final_score =100
 
 
 print("你們的相似度是",int(common_final_score),"%")
 def click_btn1():
-	print(output_guy1_tags)
+	pass
 
 def click_btn2():
-	print(output_guy2_tags)
-def click_btn3():
-	if common_tags == []:
-		print("你們共同興趣好像不多欸，分享一下自己喜歡什麼來讓對方了解你吧")
-	else:
-		common_tags = "、".join(common_tags)
-	print("「",common_tags,"」這些字都出現在你們的熱門標籤了呢!!來交流一下吧~")
-	print(common_final_score)
-	
+    pass
 
+def click_btn3():
+    pass
+	
+# lb = Label(root,height=1, width=20, text='開始使用')
+# lb1 = Label(root,height=1, width=20, text='GUY1')
+# lb2 = Label(root, height=1, width=20, text='name1:')
+# lb3 = Label(root, height=1, width=20, text='token1:')
+# lb4 = Label(root, height=1, width=20, text='GUY2')
+# lb5 = Label(root,height=1, width=20, text='name2:')
+# lb6 = Label(root,height=1, width=20, text='token2:')
+	
+# x1 = StringVar()
+# x2 = StringVar()
+# x3 = StringVar()
+# x4 = StringVar()
+# txtw1 = Entry(root, textvariable =x1) 
+# txtw2 = Entry(root,textvariable =x2)
+# txtw3 = Entry(root,textvariable =x3)
+# txtw4 = Entry(root,textvariable =x4)
+# x1.set('')
+# x2.set('')
+# x3.set('')
+# x4.set('')
+		
+
+
+# lb.grid(row=9, column=0, columnspan=1)		
+# lb1.grid(row=10, column=0, columnspan=1)
+# lb2.grid(row=11, column=0, columnspan=1)
+# lb3.grid(row=12, column=0, columnspan=1)
+# lb4.grid(row=13, column=0, columnspan=1)
+# lb5.grid(row=14, column=0, columnspan=1)
+# lb6.grid(row=15, column=0, columnspan=1)
+# txtw1.grid(row=11, column=1, columnspan=1) 
+# txtw2.grid(row=12, column=1, columnspan=1)
+# txtw3.grid(row=14, column=1, columnspan=1)
+# txtw4.grid(row=15, column=1, columnspan=1)
 
 
 
 btn = Button(root,height=2, width=20, text="開始使用" , command = click_btn)
+btn.grid(row=8,rowspan=2, column=2)
+
 btn1 = Button(root,height=2, width=20, text="GUY1常用字" , command = click_btn1)
 btn2 = Button(root,height=2, width=20, text="GUY2常用字" , command = click_btn2)		
 btn3 = Button(root,height=2, width=20, text="看兩人比較" , command = click_btn3)
-btn.grid(row=8,rowspan=2, column=2)
+
 btn1.grid(row=10,rowspan=2, column=2)
 btn2.grid(row=12,rowspan=2, column=2)
 btn3.grid(row=14,rowspan=2, column=2)
@@ -322,5 +364,7 @@ btn3.grid(row=14,rowspan=2, column=2)
 
 
 root.mainloop()
+
+
 
 
