@@ -29,7 +29,124 @@ myLabel7 = Label(root, text='祝您有好的使用體驗！                     
 myLabel7.grid(row=8,column=0,columnspan=2)
 
 
+import requests
+import json
 
+def appenddata(d):
+    if flag == True:
+        info["GUY1"].append(d)
+
+    else:
+        info["GUY2"].append(d)
+
+def get_message_and_name_first(y):#把print功能拿掉只把message(發文內容)和name(分享或按讚的專頁)拿出來(GUY1)
+    for i in range(4):
+        if i == 3:
+            for t in range(len(info[y][3])):
+                #print(info[y][3][t]["name"], info[y][3][t]["created_time"])
+                guy1_list.append(info[y][3][t]["name"])#新增
+        elif i == 2:
+            for t in range(len(info[y][2])):
+                if "message" in info[y][2][t]:
+                    #print(info[y][2][t]["message"], info[y][2][t]["created_time"])
+                    guy1_list.append(info[y][2][t]["message"])#新增
+        #else:
+            #print(info[y][i])
+
+def get_message_and_name_second(y):#把print功能拿掉只把message(發文內容)和name(分享或按讚的專頁)拿出來(GUY2)
+    for i in range(4):
+        if i == 3:
+            for t in range(len(info[y][3])):
+                #print(info[y][3][t]["name"], info[y][3][t]["created_time"])
+                guy2_list.append(info[y][3][t]["name"])#新增
+        elif i == 2:
+            for t in range(len(info[y][2])):
+                if "message" in info[y][2][t]:
+                    #print(info[y][2][t]["message"], info[y][2][t]["created_time"])
+                    guy2_list.append(info[y][2][t]["message"])#新增
+        #else:
+            #print(info[y][i])
+#因為要把兩個不同人的文章分開所以開兩個函式和list
+
+    print("____________________________________________________________________________________________________________")
+
+info = dict()
+info["GUY1"] = []
+info["GUY2"] = []
+
+
+guy1_list = []#新增
+guy2_list = []#新增
+
+for guy in range(2):
+    if guy == 0:
+      id = name_1.strip()   #輸入id
+      access_token = id_1.strip()  #輸入access token 取得token 時須取得name hometown likes posts之權限
+      flag = True
+      
+    else:
+      id = name_2.strip()
+      access_token = id_2.strip()	  
+      flag = False
+      
+    url_model = "https://graph.facebook.com/v2.9/iidd?fields=xxxxx&access_token=" + access_token  #網址模板
+    url = url_model.replace("iidd", id)   #網址
+    fields = ["name","hometown", "posts","likes"]
+
+    for f in fields:
+        initial_url = url.replace("xxxxx", f)
+        response = requests.get(initial_url)
+        if f == "name" or f == "hometown":
+            html = json.loads(response.text)
+            if f in html:#print(html[f])
+                appenddata(html[f])
+            else:
+                appenddata("None")
+
+        else:
+            html = json.loads(response.text)
+            page_counter = 0
+            #print(html[f]["data"])
+            appenddata(html[f]["data"])
+
+            while True:
+                if page_counter < 1:
+                    sub_url = html[f]["paging"]["next"]
+                    response = requests.get(sub_url)
+                    html = json.loads(response.text)
+                    page_counter += 1
+
+                    #if f in html:
+                    if "next" in html :
+                        #print(html["data"])
+                        appenddata(html["data"])
+
+                    else:
+                        break
+
+                    #else:
+                        #appenddata("None")
+
+                elif page_counter >= 1:
+                    sub_url = html["paging"]["next"]
+                    response = requests.get(sub_url)
+                    html = json.loads(response.text)
+                    page_counter += 1
+
+                    #if f in html:
+                    if "next" in html:
+                        #print(html["data"])
+                        appenddata(html["data"])
+
+                    else:
+                        break
+
+                    #else:
+                        #appenddata("None")
+
+
+get_message_and_name_first("GUY1")#改成新的函式
+get_message_and_name_second("GUY2")#改成新的函式
 
 #這三個按鈕要加上背後使用者和id(看爬蟲怎麼做要配合進來)
 def click_btn1():
@@ -169,14 +286,14 @@ def click_btn3():
 		text2 = Text(window2, height = 30, width = 43)
 		photo = PhotoImage(file = '握手.png')
 		text2.image_create(END, image = photo)
-		text2.pack(side = LEFT)
+		text2.grid(row=0,column=0,rowspan=352,columnspan=620)
 
 		scroll = Scrollbar()
 		f = tkFont.Font(size = 16, family = "微軟正黑體")
 		text1 = Text(window2, width = 200, height = 10, font = f)
 
-		scroll.pack(side=RIGHT,fill=Y)
-		text1.pack(side=LEFT,fill=Y)
+		scroll.grid(row=0,column=1,rowspan=176,columnspan=620)
+		text1.grid(row=1,column=1,rowspan=176,columnspan=620)
 
 		scroll.config(command=text1.yview)
 		text1.config(yscrollcommand=scroll.set)
@@ -203,14 +320,14 @@ def click_btn3():
 		text2 = Text(window2, height = 30, width = 43)
 		photo = PhotoImage(file = '握手.png')
 		text2.image_create(END, image = photo)
-		text2.pack(side = LEFT)
+		text2.grid(row=0,column=0,rowspan=352,columnspan=620)
 
 		scroll = Scrollbar()
 		f = tkFont.Font(size = 16, family = "微軟正黑體")
 		text1 = Text(window2, width = 200, height = 10, font = f)
 
-		scroll.pack(side=RIGHT,fill=Y)
-		text1.pack(side=LEFT,fill=Y)
+		scroll.grid(row=0,column=1,rowspan=176,columnspan=620)
+		text1.grid(row=1,column=1,rowspan=176,columnspan=620)
 
 		scroll.config(command=text1.yview)
 		text1.config(yscrollcommand=scroll.set)
@@ -275,4 +392,6 @@ btn3.grid(row=14,rowspan=2, column=2)
 
 
 root.mainloop()
+
+
 
