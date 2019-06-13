@@ -72,10 +72,7 @@ def click_btn():
 	id_1 = x2.get()
 	name_2 = x3.get()
 	id_2 = x4.get()
-	global output_guy1_tags
-	global output_guy2_tags
-	global common_tags
-	global common_final_score
+	
 	def appenddata(d):
 		if flag == True:
 			info["GUY1"].append(d)
@@ -301,7 +298,13 @@ def click_btn():
 		common_final_score =100
 
 
-	print("你們的相似度是",int(common_final_score),"%")
+	#print("你們的相似度是",int(common_final_score),"%")
+	a = int(common_final_score)
+	window = Tk()
+	window.title("相似度")
+	txt = Label(window,height = 10,width=25,text = "你們的相似度是"+str(a)+"%")
+	txt.grid(row = 0,column = 0,rowspan =3,columnspan =3 )
+	window.mainloop()
 	
 def click_btn1():
 	print(output_guy1_tags)
