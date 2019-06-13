@@ -104,7 +104,7 @@ import requests
 import json
 
 def appenddata(d):
-    if user_counter == 0:
+    if flag == True::
         info["GUY1"].append(d)
 
     else:
@@ -153,11 +153,13 @@ for guy in range(2):
     if guy == 0:
       id = name_1.strip()   #輸入id
       access_token = id_1.strip()  #輸入access token 取得token 時須取得name hometown likes posts之權限
-
+      flag = True
+      
     else:
       id = name_2.strip()
       access_token = id_2.strip()	  
-    
+      flag = False
+      
     url_model = "https://graph.facebook.com/v2.9/iidd?fields=xxxxx&access_token=" + access_token  #網址模板
     url = url_model.replace("iidd", id)   #網址
     fields = ["name","hometown", "posts","likes"]
