@@ -35,78 +35,6 @@ def click_btn():
 	id_1 = x2.get()
 	name_2 = x3.get()
 	id_2 = x4.get()
-
-
-
-def click_btn1():
-	name_1 = x1.get()
-	print(name_1)
-	
-def click_btn2():
-    pass
-
-
-def click_btn3():
-    pass
-	
-lb = Label(root,height=1, width=20, text='開始使用')
-lb1 = Label(root,height=1, width=20, text='GUY1')
-lb2 = Label(root, height=1, width=20, text='name1:')
-lb3 = Label(root, height=1, width=20, text='token1:')
-lb4 = Label(root, height=1, width=20, text='GUY2')
-lb5 = Label(root,height=1, width=20, text='name2:')
-lb6 = Label(root,height=1, width=20, text='token2:')
-	
-x1 = StringVar()
-x2 = StringVar()
-x3 = StringVar()
-x4 = StringVar()
-txtw1 = Entry(root, textvariable =x1) 
-txtw2 = Entry(root,textvariable =x2)
-txtw3 = Entry(root,textvariable =x3)
-txtw4 = Entry(root,textvariable =x4)
-x1.set('')
-x2.set('')
-x3.set('')
-x4.set('')
-		
-
-
-lb.grid(row=9, column=0, columnspan=1)		
-lb1.grid(row=10, column=0, columnspan=1)
-lb2.grid(row=11, column=0, columnspan=1)
-lb3.grid(row=12, column=0, columnspan=1)
-lb4.grid(row=13, column=0, columnspan=1)
-lb5.grid(row=14, column=0, columnspan=1)
-lb6.grid(row=15, column=0, columnspan=1)
-txtw1.grid(row=11, column=1, columnspan=1) 
-txtw2.grid(row=12, column=1, columnspan=1)
-txtw3.grid(row=14, column=1, columnspan=1)
-txtw4.grid(row=15, column=1, columnspan=1)
-
-
-
-
-btn = Button(root,height=2, width=20, text="開始使用" , command = click_btn)
-btn1 = Button(root,height=2, width=20, text="GUY1常用字" , command = click_btn1)
-btn2 = Button(root,height=2, width=20, text="GUY2常用字" , command = click_btn2)		
-btn3 = Button(root,height=2, width=20, text="看兩人比較" , command = click_btn3)
-btn.grid(row=8,rowspan=2, column=2)
-btn1.grid(row=10,rowspan=2, column=2)
-btn2.grid(row=12,rowspan=2, column=2)
-btn3.grid(row=14,rowspan=2, column=2)
-
-name_1 = x1.get()
-id_1 = x2.get()
-name_2 = x3.get()
-id_2 = x4.get()
-
-
-root.mainloop()
-
-
-
-
 import requests
 import json
 
@@ -225,6 +153,8 @@ for guy in range(2):
 
 get_message_and_name_first("GUY1")#改成新的函式
 get_message_and_name_second("GUY2")#改成新的函式
+
+
 #print(info)
 
 #print(guy1_list)#確認list內容
@@ -335,6 +265,67 @@ if common_final_score >= 100:
 
 
 print("你們的相似度是",int(common_final_score),"%")
+def click_btn1():
+	pass
+
+def click_btn2():
+    pass
+
+def click_btn3():
+    pass
+	
+lb = Label(root,height=1, width=20, text='開始使用')
+lb1 = Label(root,height=1, width=20, text='GUY1')
+lb2 = Label(root, height=1, width=20, text='name1:')
+lb3 = Label(root, height=1, width=20, text='token1:')
+lb4 = Label(root, height=1, width=20, text='GUY2')
+lb5 = Label(root,height=1, width=20, text='name2:')
+lb6 = Label(root,height=1, width=20, text='token2:')
+	
+x1 = StringVar()
+x2 = StringVar()
+x3 = StringVar()
+x4 = StringVar()
+txtw1 = Entry(root, textvariable =x1) 
+txtw2 = Entry(root,textvariable =x2)
+txtw3 = Entry(root,textvariable =x3)
+txtw4 = Entry(root,textvariable =x4)
+x1.set('')
+x2.set('')
+x3.set('')
+x4.set('')
+		
+
+
+lb.grid(row=9, column=0, columnspan=1)		
+lb1.grid(row=10, column=0, columnspan=1)
+lb2.grid(row=11, column=0, columnspan=1)
+lb3.grid(row=12, column=0, columnspan=1)
+lb4.grid(row=13, column=0, columnspan=1)
+lb5.grid(row=14, column=0, columnspan=1)
+lb6.grid(row=15, column=0, columnspan=1)
+txtw1.grid(row=11, column=1, columnspan=1) 
+txtw2.grid(row=12, column=1, columnspan=1)
+txtw3.grid(row=14, column=1, columnspan=1)
+txtw4.grid(row=15, column=1, columnspan=1)
+
+
+
+
+btn = Button(root,height=2, width=20, text="開始使用" , command = click_btn)
+btn1 = Button(root,height=2, width=20, text="GUY1常用字" , command = click_btn1)
+btn2 = Button(root,height=2, width=20, text="GUY2常用字" , command = click_btn2)		
+btn3 = Button(root,height=2, width=20, text="看兩人比較" , command = click_btn3)
+btn.grid(row=8,rowspan=2, column=2)
+btn1.grid(row=10,rowspan=2, column=2)
+btn2.grid(row=12,rowspan=2, column=2)
+btn3.grid(row=14,rowspan=2, column=2)
+
+
+
+root.mainloop()
+
+
 
 import tkinter
 from tkinter import *
