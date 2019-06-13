@@ -104,7 +104,7 @@ import requests
 import json
 
 def appenddata(d):
-    if flag == True::
+    if flag == True:
         info["GUY1"].append(d)
 
     else:
